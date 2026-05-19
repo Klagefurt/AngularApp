@@ -30,6 +30,7 @@
               }
             ],
             "styles": [
+              "src/fonts.scss",
               "src/styles.scss"
             ]
           },
