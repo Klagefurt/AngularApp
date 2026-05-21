@@ -1,4 +1,8 @@
-@use "./fonts.scss";
+@import "./fonts.scss";
+
+* {
+  font-family: 'JetBrains Mono', monospace;
+}
 
 :root {
   --dark-color: black;
@@ -10,7 +14,6 @@ body {
   background-color: var(--dark-color);
   color: white; 
   font-weight: 800;
-  font-family: 'JetBrains Mono', monospace;
 }
 
 .skill-tag {
@@ -30,11 +33,9 @@ body {
   color: var(--dark-color);
   font-size: 14px;
   font-weight: 700;
-  border-radius: 4px;
   padding: 10px 20px;
   line-height: 24px;
   border: none;
-  cursor: pointer;
 }
 
 .h6 {
