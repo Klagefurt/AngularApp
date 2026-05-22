@@ -65,7 +65,8 @@
               "buildTarget": "tik-talk:build:production"
             },
             "development": {
-              "buildTarget": "tik-talk:build:development"
+              "buildTarget": "tik-talk:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
