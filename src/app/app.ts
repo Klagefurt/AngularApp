@@ -1,8 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ProfileCard } from "./common-ui/profile-card/profile-card";
-import { Profile } from './data/services/profile';
+import { ProfileService } from './data/services/profile.service';
 import {JsonPipe} from "@angular/common";
+import { UserProfile } from './data/interfaces/profile.interface';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,8 @@ import {JsonPipe} from "@angular/common";
   styleUrl: './app.scss'
 })
 export class App {
-  //protected readonly title = signal('tik-talk');
-  profileService = inject(Profile);
-  profiles = signal<any>([]);
+  profileService = inject(ProfileService);
+  profiles = signal<UserProfile[]>([]);
 
   constructor() {
     this.profileService.getTestAccounts().subscribe((accounts) => {

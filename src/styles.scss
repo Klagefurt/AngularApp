@@ -1,7 +1,10 @@
-@import "./fonts.scss";
+@use "./fonts.scss";
 
 * {
   font-family: 'JetBrains Mono', monospace;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
@@ -23,9 +26,13 @@ body {
   padding: 4px 8px;
   border-radius: 4px;
   border: 1px solid var(--light-color);
-  display: inline;
-  margin-right: 4px;
-  line-height: 24px;
+  //margin-right: 4px;
+  //line-height: 24px;
+
+  display: inline-block;
+  line-height: 1;
+  margin: 0 4px 4px 0;
+
 }
 
 .btn {
