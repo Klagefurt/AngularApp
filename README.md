@@ -1,0 +1,2 @@
+# AngularApp
+FastAPI + Angular Application
