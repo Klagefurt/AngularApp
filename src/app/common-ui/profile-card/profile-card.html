@@ -1,7 +1,11 @@
 @if (profile()) {
   <div class="profile-card">
     <div class="avatar-name">
-      <img src="/assets/images/Img.png" alt="avatar" class="profile-card__avatar">
+      <img 
+        [src]="profile().avatarUrl"
+        [alt]="profile().firstName + ' ' + profile().lastName"
+        class="profile-card__avatar"
+      >
       <div class="profile-card__name">
         <h6 class="h6">{{ profile().firstName }} {{ profile().lastName }}</h6>
         <span class="subtitle">{{ profile().username }}</span>

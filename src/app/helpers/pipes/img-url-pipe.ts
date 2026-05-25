@@ -4,7 +4,10 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'imgUrl',
 })
 export class ImgUrlPipe implements PipeTransform {
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(value: string | null | undefined): string | null | undefined {
+    if (!value) {
+      return null;
+    }
+    return value;
   }
 }
