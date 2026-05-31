@@ -2,5 +2,9 @@
   "/account": {
     "target": "http://192.168.0.127:8000",
     "secure": false
-  }
+  },
+    "/auth": {
+      "target": "http://192.168.0.127:8000",
+      "secure": false
+    }
 }
