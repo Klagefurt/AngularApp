@@ -24,15 +24,16 @@ export class LoginPage {
     console.log("Form value:", this.form.value);
 
     this.auth.login(
-      this.form.value.username!, this.form.value.password!)
-      .subscribe({
-        next: (res) => {
+      this.form.value.username!,
+      this.form.value.password!
+    ).subscribe({
+      next: (isSuccess) => {
+        if (isSuccess) {
           this.router.navigate(['/']);
-          console.log(res);
-        },
-        error: (err) => {
-          console.error(err);
+        } else {
+          alert('Login failed. Please check your credentials and try again.');
         }
+      }
     });
   }
 }

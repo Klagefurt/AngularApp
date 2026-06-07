@@ -11,5 +11,8 @@ export class ProfileService {
   getTestAccounts() {
     return this.http.get<UserProfile[]>(`/account/test_accounts`);
   }
-      
+
+  getMyProfile() {
+    return this.http.get<UserProfile>(`/account/me`);
+  }
 }

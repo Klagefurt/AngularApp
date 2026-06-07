@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { TokenResponse } from './auth.interface';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -28,9 +28,7 @@ export class Auth {
       password: password
     }
  
-    return this.http.post<TokenResponse>(
-      '/auth/token', 
-      body
+    return this.http.post<TokenResponse>('/auth/token', body
     ).pipe(
       tap(resp => {
         this.accessToken = resp.access_token;
@@ -38,6 +36,9 @@ export class Auth {
 
         this.cookieService.set('access_token', this.accessToken!, { path: '/' });
         this.cookieService.set('refresh_token', this.refreshToken!, { path: '/' });
+      }),
+      map(resp => {
+        return !!resp.access_token; // Return true if login was successful
       })
     );
   }
