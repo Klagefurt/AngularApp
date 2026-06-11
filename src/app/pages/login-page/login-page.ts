@@ -11,17 +11,20 @@ import { Router } from '@angular/router';
   styleUrl: './login-page.scss',
 })
 export class LoginPage {
-  auth = inject(Auth);
-  router = inject(Router);
+  private auth = inject(Auth);
+  private router = inject(Router);
 
   form = new FormGroup({
     username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [Validators.required]),
   });
 
 
   onSubmit() {
-    console.log("Form value:", this.form.value);
+    if (this.form.invalid) {
+      alert('Please fill in all required fields with valid data.');
+      return;
+    }
 
     this.auth.login(
       this.form.value.username!,
@@ -33,6 +36,10 @@ export class LoginPage {
         } else {
           alert('Login failed. Please check your credentials and try again.');
         }
+      },
+      error: (err) => {
+        console.error('Login error:', err);
+        alert('An error occurred during login. Please try again later.');
       }
     });
   }

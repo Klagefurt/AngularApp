@@ -1,18 +1,43 @@
-import { HttpInterceptorFn } from "@angular/common/http";
+import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
 import { Auth } from "./auth";
 import { inject } from "@angular/core";
+import { catchError, switchMap, throwError } from "rxjs";
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = inject(Auth).accessToken;
+  const authService = inject(Auth);
+  const token = authService.accessToken;
 
-  if (!token) return next(req);
+  // If no token, just pass the request
+  if (!token) { return next(req); }
 
-  const clonedReq = req.clone({
+  // Clone the request and add the Authorization header
+  const authReq = req.clone({
     setHeaders: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+      Authorization: `Bearer ${token}`,
+    },
+  }); 
 
-  return next(clonedReq);
-  
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+      // If we get a 401, try to refresh the token
+      if (error.status === 401) {
+
+        return authService.refreshAuthToken().pipe(
+          // Here we got the NEW tokens
+          switchMap((newTokens) => {
+            // Clone the original request with the NEW access_token 
+            const retryReq = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${newTokens.access_token}`,
+              },
+            });
+            // Retry the original request with the new token
+            return next(retryReq);
+          })
+        );
+      }
+      return throwError(() => error);
+    })
+  );
 }
+
